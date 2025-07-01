@@ -1,0 +1,82 @@
+/*Write a C program to generate student mark sheets with subject details and grades using Structure.
+GRADE CALCULATION:
+1)if avg>70 the grade will be 1
+2)if avg 50 to 70 the grade will be 2
+3)if avg is below 50 the grade will be 3
+(Note: rn- Roll Number, s-Subjects, avg- Average)
+Example:
+STUDENT MARKSHEET USING STRUCTURES
+Enter the no of students
+2
+12
+65
+65
+78
+65
+89
+56
+89
+09
+76
+65 
+34
+ 
+rn    s1    s2    s3    s4    s5    avg    grade
+ 
+12   65   65   78   65   89   72.00      1
+ 
+56   89     9   76   65   34   54.00      2*/
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+struct Student {
+    int rn;   
+    int s[5];
+    float avg;
+    int grade;
+};
+
+void calculate(Student &stu) {
+    int sum = 0;
+    for (int i = 0; i < 5; ++i) {
+        sum += stu.s[i];
+    }
+    stu.avg = sum / 5.0;
+
+    if (stu.avg > 70)
+        stu.grade = 1;
+    else if (stu.avg >= 50)
+        stu.grade = 2;
+    else
+        stu.grade = 3;
+}
+
+int main() {
+    int n;
+    cout << "STUDENT MARKSHEET USING STRUCTURES\n";
+    cout << "Enter the no of students"<<endl;
+    cout<<endl;
+    cin >> n;
+
+    Student students[n];
+
+    for (int i = 0; i < n; i++) {
+        cin >> students[i].rn;
+        for (int j = 0; j < 5; j++) {
+            cin >> students[i].s[j];
+        }
+        calculate(students[i]);
+    }
+
+    cout << "rn s1 s2 s3 s4 s5 avg grade\n";
+    for (int i = 0; i < n; i++) {
+        cout << students[i].rn<<" ";
+        for (int j = 0; j < 5; j++) {
+            cout << students[i].s[j]<<" ";
+        }
+        cout << fixed << setprecision(2) << students[i].avg <<" "<<students[i].grade << "\n";
+    }
+
+    return 0;
+}
