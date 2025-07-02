@@ -1,0 +1,94 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Abstract Base Class
+class Player {
+protected:
+    string name;
+    string teamName;
+    int noOfMatches;
+
+public:
+    Player(string name, string teamName, int noOfMatches)
+        : name(name), teamName(teamName), noOfMatches(noOfMatches) {}
+
+    virtual void displayPlayerStatistics() = 0; // Pure virtual
+};
+
+// Cricket Player Class
+class CricketPlayer : public Player {
+private:
+    int totalRunsScored;
+    int noOfWicketsTaken;
+
+public:
+    CricketPlayer(string name, string teamName, int noOfMatches, int totalRunsScored, int noOfWicketsTaken)
+        : Player(name, teamName, noOfMatches), totalRunsScored(totalRunsScored), noOfWicketsTaken(noOfWicketsTaken) {}
+
+    void displayPlayerStatistics() override {
+        cout << "Player Details\n";
+        cout << "Player name:" << name << "\n";
+        cout << "Team name:" << teamName << "\n";
+        cout << "No of matches:" << noOfMatches << "\n";
+        cout << "Total runs scored:" << totalRunsScored << "\n";
+        cout << "No of wickets taken:" << noOfWicketsTaken << "\n";
+    }
+};
+
+// Hockey Player Class
+class HockeyPlayer : public Player {
+private:
+    string position;
+    int noOfGoals;
+
+public:
+    HockeyPlayer(string name, string teamName, int noOfMatches, string position, int noOfGoals)
+        : Player(name, teamName, noOfMatches), position(position), noOfGoals(noOfGoals) {}
+
+    void displayPlayerStatistics() override {
+        cout << "Player Details\n";
+        cout << "Player name:" << name << "\n";
+        cout << "Team name:" << teamName << "\n";
+        cout << "No of matches:" << noOfMatches << "\n";
+        cout << "Position:" << position << "\n";
+        cout << "No of goals:" << noOfGoals << "\n";
+    }
+};
+
+// Main Function
+int main() {
+    int choice;
+    cout << "Menu\n1.Cricket Player Details\n2.Hockey Player Details\n";
+    cin >> choice;
+    cin.ignore();
+
+    if (choice == 1) {
+        string name, team;
+        int matches, runs, wickets;
+        getline(cin, name);
+        getline(cin, team);
+        cin >> matches >> runs >> wickets;
+
+        CricketPlayer cp(name, team, matches, runs, wickets);
+        cp.displayPlayerStatistics();
+
+    } else if (choice == 2) {
+        string name, team, position;
+        int matches, goals;
+        getline(cin, name);
+        getline(cin, team);
+        cin >> matches;
+        cin.ignore();
+        getline(cin, position);
+        cin >> goals;
+
+        HockeyPlayer hp(name, team, matches, position, goals);
+        hp.displayPlayerStatistics();
+
+    } else {
+        cout << "Invalid choice\n";
+    }
+
+    return 0;
+}

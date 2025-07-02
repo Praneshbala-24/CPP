@@ -1,0 +1,108 @@
+#include <iostream>
+#include <string>
+#include <algorithm> // for transform
+using namespace std;
+class HotelRoom {
+protected:
+    string hotelName;
+    int numberOfSqFeet;
+    bool hasTV;
+    bool hasWifi;
+public:
+    HotelRoom(string hotelName, int numberOfSqFeet, bool hasTV, bool hasWifi) {
+        this->hotelName = hotelName;
+        this->numberOfSqFeet = numberOfSqFeet;
+        this->hasTV = hasTV;
+        this->hasWifi = hasWifi;
+    }
+    virtual int getRatePerSqFeet() {
+        return 0;
+    }
+    virtual int calculateTariff() {
+        return numberOfSqFeet * getRatePerSqFeet();
+    }
+};
+class DeluxeRoom : public HotelRoom {
+protected:
+    int ratePerSqFeet;
+public:
+    DeluxeRoom(string hotelName, int numberOfSqFeet, bool hasTV, bool hasWifi)
+        : HotelRoom(hotelName, numberOfSqFeet, hasTV, hasWifi) {
+        ratePerSqFeet = 10;
+    }
+    int getRatePerSqFeet() override {
+        return hasWifi ? ratePerSqFeet + 2 : ratePerSqFeet;
+    }
+};
+class DeluxeACRoom : public DeluxeRoom {
+public:
+    DeluxeACRoom(string hotelName, int numberOfSqFeet, bool hasTV, bool hasWifi)
+        : DeluxeRoom(hotelName, numberOfSqFeet, hasTV, hasWifi) {
+        ratePerSqFeet = 12;
+    }
+};
+class SuiteACRoom : public HotelRoom {
+private:
+    int ratePerSqFeet;
+public:
+    SuiteACRoom(string hotelName, int numberOfSqFeet, bool hasTV, bool hasWifi)
+        : HotelRoom(hotelName, numberOfSqFeet, hasTV, hasWifi) {
+        ratePerSqFeet = 15;
+    }
+    int getRatePerSqFeet() override {
+        return hasWifi ? ratePerSqFeet + 2 : ratePerSqFeet;
+    }
+};
+bool toBool(const string& input) {
+    string s = input;
+    transform(s.begin(), s.end(), s.begin(), ::tolower);
+    return (s == "yes");
+}
+int main() {
+    int choice;
+    cin >> choice;
+    if (choice < 1 || choice > 3) {
+        cout << "Invalid choice\n";
+        return 1;
+    }
+    cout << "Hotel Name:\n";
+    string hotelName;
+    cin.ignore(); // discard newline left in input buffer
+    getline(cin, hotelName);
+    if (hotelName.empty()) {
+        cout << "Hotel name cannot be empty\n";
+        return 1;
+    }
+    cout << "Room Square Feet Area:\n";
+    int sqFeet;
+    cin >> sqFeet;
+    if (sqFeet <= 0) {
+        cout << "Square feet must be positive\n";
+        return 1;
+    }
+    cout << "Room has TV (yes/no):\n";
+    string tvInput;
+    cin >> tvInput;
+    bool hasTV = toBool(tvInput);
+    cout << "Room has Wifi (yes/no):\n";
+    string wifiInput;
+    cin >> wifiInput;
+    bool hasWifi = toBool(wifiInput);
+    HotelRoom* room = nullptr;
+    switch (choice) {
+        case 1:
+            room = new DeluxeRoom(hotelName, sqFeet, hasTV, hasWifi);
+            break;
+        case 2:
+            room = new DeluxeACRoom(hotelName, sqFeet, hasTV, hasWifi);
+            break;
+        case 3:
+            room = new SuiteACRoom(hotelName, sqFeet, hasTV, hasWifi);
+            break;
+    }
+
+    cout << "Room Tariff per day is: " << room->calculateTariff() << "\n";
+
+    delete room;
+    return 0;
+}

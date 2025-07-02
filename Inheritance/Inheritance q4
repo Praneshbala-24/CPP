@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+using namespace std;
+class IPlayerStatistics {
+public:
+    virtual void displayPlayerStatistics() = 0; 
+    virtual ~IPlayerStatistics() {}
+};
+class Player :
+public IPlayerStatistics {
+private:
+    string name;
+    string teamName;
+    int noOfMatches;
+    long long totalRunsScored;
+    int noOfWicketsTaken;
+
+public:
+    Player(string n, string t, int matches, long long runs, int wickets)
+        : name(n), teamName(t), noOfMatches(matches), totalRunsScored(runs), noOfWicketsTaken(wickets) {}
+
+    void displayPlayerStatistics() override {
+        cout << "Player Details:\n";
+        cout << "Player name: " << name << "\n";
+        cout << "Team name: " << teamName << "\n";
+        cout << "No of matches: " << noOfMatches << "\n";
+        cout << "Total runs scored: " << totalRunsScored << "\n";
+        cout << "No of wickets taken: " << noOfWicketsTaken << "\n";
+    }
+};
+
+int main() {
+    string name, teamName;
+    int noOfMatches;
+    long long totalRunsScored;
+    int noOfWicketsTaken;
+
+    cout << "Enter player name: "<<endl;
+    getline(cin, name);
+    cout << "Enter team name: "<<endl;
+    getline(cin, teamName);
+    cout << "Enter number of matches played: "<<endl;
+    cin >> noOfMatches;
+    cout << "Enter total runs scored: "<<endl;
+    cin >> totalRunsScored;
+    cout << "Enter number of wickets taken: "<<endl;
+    cin >> noOfWicketsTaken;
+
+    Player p(name, teamName, noOfMatches, totalRunsScored, noOfWicketsTaken);
+    p.displayPlayerStatistics();
+
+    return 0;
+}
