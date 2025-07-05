@@ -1,0 +1,45 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+void insertInSortedOrder(stack<int>& st, int element) {
+    if (st.empty() || st.top() >= element) {
+        st.push(element);
+        return;
+    }
+    int temp = st.top();
+    st.pop();
+    insertInSortedOrder(st, element);
+    st.push(temp);
+}
+void sortStack(stack<int>& st) {
+    if (st.empty()) return;
+    int temp = st.top();
+    st.pop();
+    sortStack(st);
+    insertInSortedOrder(st, temp);
+}
+void printBottomToTop(stack<int>& st) {
+    if (st.empty()) return;
+    int temp = st.top();
+    st.pop();
+    printBottomToTop(st);
+    cout << temp << " ";
+    st.push(temp);
+}
+int main() {
+    int n;
+    cin >> n;
+    stack<int> st;
+    int* arr = new int[n];
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+    }
+    for (int i = 0; i < n; ++i) {
+        st.push(arr[i]);
+    }
+    sortStack(st);
+    printBottomToTop(st);
+    cout << endl;
+    delete[] arr;
+    return 0;
+}

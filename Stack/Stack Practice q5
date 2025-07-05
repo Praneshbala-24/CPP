@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <stack>
+using namespace std;
+bool knows(const vector<vector<int>>& M, int a, int b) {
+    return M[a][b] == 1;
+}
+int findCelebrity(vector<vector<int>>& M, int n) {
+    stack<int> s;
+    for (int i = 0; i < n; ++i) {
+        s.push(i);
+    }
+    while (s.size() > 1) {
+        int a = s.top(); s.pop();
+        int b = s.top(); s.pop();
+        if (knows(M, a, b)) {
+            s.push(b);
+        } else {
+            s.push(a);
+        }
+    }
+    int candidate = s.top();
+    for (int i = 0; i < n; ++i) {
+        if (i != candidate) {
+            if (knows(M, candidate, i) || !knows(M, i, candidate)) {
+                return -1;
+            }
+        }
+    }
+    return candidate;
+}
+int main() {
+    int n;
+    cin >> n;
+    vector<vector<int>> M(n, vector<int>(n));
+    for (int i = 0; i < n; ++i)
+        for (int j = 0; j < n; ++j)
+            cin >> M[i][j];
+    cout << findCelebrity(M, n) << endl;
+    return 0;
+}
