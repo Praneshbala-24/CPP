@@ -1,0 +1,41 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    string type;
+    cin >> type;
+
+    // adjacency list: vector of pairs (v, w)
+    vector<vector<pair<int, int>>> adj(n);
+
+    for (int i = 0; i < m; i++) {
+        int u, v, w;
+        cin >> u >> v >> w;
+
+        adj[u].push_back({v, w});
+        if (type == "undirected") {
+            adj[v].push_back({u, w});
+        }
+    }
+
+    // Sort each list by destination vertex
+    for (int i = 0; i < n; i++) {
+        sort(adj[i].begin(), adj[i].end());
+    }
+
+    // Print adjacency list
+    for (int i = 0; i < n; i++) {
+        cout << i << ":";
+        for (auto &edge : adj[i]) {
+            cout << " (" << edge.first << "," << edge.second << ")";
+        }
+        cout << "\n";
+    }
+
+    return 0;
+}

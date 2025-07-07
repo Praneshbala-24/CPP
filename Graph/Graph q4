@@ -1,0 +1,48 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+const int MAXN = 10005; // Maximum number of vertices
+
+vector<int> adj[MAXN];
+vector<bool> visited(MAXN, false);
+
+// DFS to detect cycle
+bool dfs(int node, int parent) {
+    visited[node] = true;
+    for (int neighbor : adj[node]) {
+        if (!visited[neighbor]) {
+            if (dfs(neighbor, node)) return true;
+        } else if (neighbor != parent) {
+            // Found a back edge → cycle
+            return true;
+        }
+    }
+    return false;
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    // Build adjacency list
+    for (int i = 0; i < m; ++i) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u); // Undirected graph
+    }
+
+    // Check all components
+    for (int i = 0; i < n; ++i) {
+        if (!visited[i]) {
+            if (dfs(i, -1)) {
+                cout << "Cycle detected\n";
+                return 0;
+            }
+        }
+    }
+
+    cout << "No cycle\n";
+    return 0;
+}

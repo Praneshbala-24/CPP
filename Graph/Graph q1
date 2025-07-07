@@ -1,0 +1,36 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    string type;
+    cin >> type;
+
+    // Initialize n x n matrix with 0
+    vector<vector<int>> adjMatrix(n, vector<int>(n, 0));
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        adjMatrix[u][v] = 1;
+        if (type == "undirected") {
+            adjMatrix[v][u] = 1;
+        }
+    }
+
+    // Print the adjacency matrix
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << adjMatrix[i][j];
+            if (j != n - 1) cout << " ";
+        }
+        cout << " "<<endl;
+    }
+
+    return 0;
+}
