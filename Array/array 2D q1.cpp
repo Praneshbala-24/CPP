@@ -1,4 +1,4 @@
-Write a program to find the maximum element in the matrix.
+/*Write a program to find the maximum element in the matrix.
 
 Input Format:
 First line: Two integers r and c — representing the number of rows and columns of the matrix.
@@ -22,7 +22,7 @@ Sample Input 1:
 0 3
 
 Sample Output 1:
-The maximum element is 9
+The maximum element is 9*/
 
 
 #include <iostream>
