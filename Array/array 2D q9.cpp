@@ -3,37 +3,25 @@ The first integer corresponds to the number of rows/columns in the matrix.
 The remaining integers correspond to the elements in the matrix.
 The elements are read in row wise order, first row first, then second row and so on.
 Assume that the maximum value of m and n is 5.
-
 Output Format:
 Print yes if it is an upper triangular matrix . Print no if it is not an upper triangular matrix.
-
-
 Constraints:
 NA
-
-
 Example:
 Sample Input 1:
 2
 1 2
 0 3
-
 Sample Output 1:
 Yes
-
 Sample Input 2:
 2
 1 2
 3 3
-
 Sample Output 2:
 No
-
-
 Explanation:
 NA
-
-
 Public Test Cases:
 #	Input	Expected Output
 1	
